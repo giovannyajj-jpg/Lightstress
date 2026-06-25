@@ -50,6 +50,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
+            position: relative;
         }
 
         .logo {
@@ -67,6 +68,23 @@
             animation: pulse 1.5s infinite alternate;
         }
 
+        /* Botón de los 3 puntitos / Menú Hamburguesa */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-toggle:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+
         nav ul {
             display: flex;
             list-style: none;
@@ -80,7 +98,7 @@
             font-weight: 700;
             text-transform: uppercase;
             transition: 0.3s;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 4px;
         }
 
@@ -314,10 +332,40 @@
             to { transform: scale(1.1); text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--dark-neon); }
         }
 
+        /* --- DISEÑO RESPONSIVE CON MENÚ DESPLEGABLE --- */
         @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 15px; }
+            .menu-toggle {
+                display: block; /* Muestra los puntitos/hamburguesa en móviles */
+            }
+
+            nav {
+                display: none; /* Oculta el menú por defecto en pantallas chicas */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(19, 26, 34, 0.98);
+                border-bottom: 2px solid var(--neon-blue);
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+            }
+
+            nav.show-menu {
+                display: block; /* Se muestra al activar el JavaScript */
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                padding: 10px;
+            }
+
             .hero h1 { font-size: 1.8rem; }
-            nav ul { flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
@@ -328,7 +376,13 @@
             <div class="logo">
                 <i class="fa-solid fa-bolt"></i> LIGHTSTRESS
             </div>
-            <nav>
+            
+            <!-- Botón de menú clásico (3 líneas/puntos modificados a formato compacto) -->
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <nav id="navbar">
                 <ul>
                     <li><a href="#" class="nav-link active" onclick="switchTab('tienda')">Tienda</a></li>
                     <li><a href="#" class="nav-link" onclick="switchTab('rangos-yt')">Rangos YT</a></li>
@@ -343,13 +397,13 @@
         <h1>LIGHTSTRESS SURVIVAL</h1>
         <p>Una experiencia clásica e intensa adaptada a la versión 0.15.X</p>
         <div class="server-ip">
-            <i class="fa-solid fa-gamepad"></i> IP: <span>lightstress.github.io (O la de tu host)</span>
+            <i class="fa-solid fa-gamepad"></i> IP: <span>lightstress.github.io</span>
         </div>
     </div>
 
     <div class="container">
 
-        <!-- SECCIÓN TIENDA (RANGOS, KITS, KEYS) -->
+        <!-- SECCIÓN TIENDA -->
         <section id="tienda" class="active-section">
             <h2 class="section-title">Rangos VIP</h2>
             <div class="grid" style="margin-bottom: 50px;">
@@ -450,15 +504,11 @@
             <h2 class="section-title">Información Técnica</h2>
             <div class="info-box">
                 <h3><i class="fa-solid fa-code-branch"></i> Versión Soportada</h3>
-                <p>LightStress está optimizado específicamente para las versiones <strong>0.15.X</strong> de Minecraft Pocket Edition / Bedrock. Esto garantiza la nostalgia y fluidez de los sistemas clásicos.</p>
+                <p>LightStress está optimizado específicamente para las versiones <strong>0.15.X</strong> de Minecraft Pocket Edition / Bedrock.</p>
             </div>
             <div class="info-box">
-                <h3><i class="fa-solid fa-shield-halved"></i> Modalidad: Survival</h3>
-                <p>Un survival enfocado en la economía, protección de terrenos y PvP</p>
-            </div>
-            <div class="info-box">
-                <h3><i class="fa-solid fa-users-gear"></i> Soporte Técnico</h3>
-                <p>¿Problemas con tu compra o reporte de usuarios? El equipo administrativo atiende las 24 horas del día a través de nuestro panel centralizado en Discord.</p>
+                <h3><i class="fa-solid fa-shield-halved"></i> Modalidad: Survival Neón</h3>
+                <p>Un survival enfocado en la economía, protección de terrenos y PvP equilibrado bajo la temática de rayos y luces neón oscuras.</p>
             </div>
         </section>
 
@@ -477,7 +527,13 @@
     </footer>
 
     <script>
-        // Sistema simple de pestañas (Tabs)
+        // Función para abrir/cerrar el menú desplegable en celulares
+        function toggleMenu() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('show-menu');
+        }
+
+        // Sistema de pestañas (Tabs)
         function switchTab(tabId) {
             // Desactivar todas las secciones
             const sections = document.querySelectorAll('section');
@@ -492,11 +548,15 @@
             
             // Activar enlace clicado
             event.currentTarget.classList.add('active');
+
+            // Cierra el menú automáticamente en celular tras hacer clic en una sección
+            const navbar = document.getElementById('navbar');
+            navbar.classList.remove('show-menu');
         }
 
         // Simulación de acción de compra
         function buyAction(item) {
-            alert('Has seleccionado: ' + item + '\n\nPara completar tu compra en este entorno beta de GitHub, abre un Ticket en nuestro Discord oficial y adjunta el nombre del producto.');
+            alert('Has seleccionado: ' + item + '\n\nPara completar tu compra en este entorno beta de GitHub, abre un Ticket en nuestro Discord oficial.');
         }
     </script>
 </body>
