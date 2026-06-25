@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightStress | Tienda Oficial</title>
+    <!-- Google Fonts para estilo Minecraft y Moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --container-bg: #1f2833;
+            --neon-blue: #00d2ff;
+            --dark-neon: #0066ff;
+            --text-color: #c5c6c7;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #002244 0%, #0b0c10 100%);
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: rgba(31, 40, 51, 0.95);
+            border-bottom: 3px solid var(--neon-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--dark-neon);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--neon-blue);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0px #0033aa, 0 0 20px var(--neon-blue);
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            color: #85929E;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .server-ip {
+            display: inline-flex;
+            align-items: center;
+            background: #111;
+            border: 2px solid var(--neon-blue);
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-light);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .server-ip span {
+            color: var(--neon-blue);
+            margin-left: 10px;
+        }
+
+        /* --- MAIN CONTENT & SECTIONS --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        section.active-section {
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px var(--dark-neon);
+            position: relative;
+        }
+
+        /* GRID PARA TIENDA */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--container-bg);
+            border: 2px solid #2b3746;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .card h3 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .card .price {
+            font-size: 2.2rem;
+            color: var(--neon-blue);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+        }
+
+        .card ul li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul li i {
+            color: var(--neon-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--dark-neon), var(--neon-blue));
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 15px var(--neon-blue);
+            filter: brightness(1.1);
+        }
+
+        /* --- REGLAS E INFO --- */
+        .info-box {
+            background: var(--container-bg);
+            padding: 30px;
+            border-left: 5px solid var(--neon-blue);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .info-box h3 {
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+
+        .rule-list {
+            list-style: none;
+        }
+
+        .rule-list li {
+            background: #151c24;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #253141;
+            font-size: 1.2rem;
+        }
+
+        .rule-list strong {
+            color: var(--neon-blue);
+        }
+
+        /* --- DISCORD FLOATING BUTTON & FOOTER --- */
+        .discord-sec {
+            text-align: center;
+            background: #23272A;
+            padding: 40px;
+            border-radius: 8px;
+            border: 2px solid #7289DA;
+            margin-top: 50px;
+        }
+
+        .discord-sec h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .btn-discord {
+            background: #7289DA;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: auto;
+            padding: 12px 30px;
+        }
+
+        .btn-discord:hover {
+            box-shadow: 0 0 15px #7289DA;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #060709;
+            border-top: 1px solid #1f2833;
+            margin-top: 60px;
+            font-size: 1.1rem;
+        }
+
+        /* --- ANIMACIONES --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); text-shadow: 0 0 10px var(--neon-blue); }
+            to { transform: scale(1.1); text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--dark-neon); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 1.8rem; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-bolt"></i> LIGHTSTRESS
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" onclick="switchTab('tienda')">Tienda</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchTab('rangos-yt')">Rangos YT</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchTab('reglas')">Reglas</a></li>
+                    <li><a href="#" class="nav-link" onclick="switchTab('info')">Info Server</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>LIGHTSTRESS SURVIVAL</h1>
+        <p>Una experiencia clásica e intensa adaptada a la versión 0.15.X</p>
+        <div class="server-ip">
+            <i class="fa-solid fa-gamepad"></i> IP: <span>lightstress.github.io (O la de tu host)</span>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- SECCIÓN TIENDA (RANGOS, KITS, KEYS) -->
+        <section id="tienda" class="active-section">
+            <h2 class="section-title">Rangos VIP</h2>
+            <div class="grid" style="margin-bottom: 50px;">
+                <div class="card">
+                    <h3>STRESS</h3>
+                    <div class="price">$2.99 / Mes</div>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Prefijo [Stress] en el chat</li>
+                        <li><i class="fa-solid fa-check"></i> Acceso a /fly en tu parcela</li>
+                        <li><i class="fa-solid fa-check"></i> 3 Hogares (/sethome)</li>
+                        <li><i class="fa-solid fa-check"></i> Kit Stress diario</li>
+                    </ul>
+                    <button class="btn" onclick="buyAction('Rango STRESS')">Comprar</button>
+                </div>
+                <div class="card" style="border-color: var(--neon-blue);">
+                    <h3>LIGHT</h3>
+                    <div class="price">$5.99 / Mes</div>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Prefijo [Light] azul neón</li>
+                        <li><i class="fa-solid fa-check"></i> Acceso a /fly global</li>
+                        <li><i class="fa-solid fa-check"></i> 6 Hogares (/sethome)</li>
+                        <li><i class="fa-solid fa-check"></i> Kit Light único</li>
+                        <li><i class="fa-solid fa-check"></i> Prioridad al entrar</li>
+                    </ul>
+                    <button class="btn" onclick="buyAction('Rango LIGHT')">Comprar</button>
+                </div>
+            </div>
+
+            <h2 class="section-title">Kits & Keys</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Kit Herramientas</h3>
+                    <div class="price">$1.50</div>
+                    <ul>
+                        <li><i class="fa-solid fa-bolt"></i> Espada de Diamante Full</li>
+                        <li><i class="fa-solid fa-bolt"></i> Pico Eficiencia IV</li>
+                        <li><i class="fa-solid fa-bolt"></i> Hacha e instrumental</li>
+                    </ul>
+                    <button class="btn" onclick="buyAction('Kit Herramientas')">Comprar</button>
+                </div>
+                <div class="card">
+                    <h3>3x Keys Neón</h3>
+                    <div class="price">$2.00</div>
+                    <ul>
+                        <li><i class="fa-solid fa-key"></i> Llaves para la Caja Neón</li>
+                        <li><i class="fa-solid fa-star"></i> Probabilidad de Armaduras Top</li>
+                        <li><i class="fa-solid fa-star"></i> Minerales y bloques raros</li>
+                    </ul>
+                    <button class="btn" onclick="buyAction('3x Keys Neon')">Comprar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN REQUISITOS YOUTUBERS -->
+        <section id="rangos-yt">
+            <h2 class="section-title">Requisitos de Creadores</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>MINI YT</h3>
+                    <div class="price" style="color: #FF0000;"><i class="fa-brands fa-youtube"></i> Requisitos</div>
+                    <ul style="text-align: center;">
+                        <li style="justify-content: center;"><i class="fa-solid fa-users"></i> Mínimo 150 Suscriptores</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-eye"></i> 40 vistas por video de LightStress</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-video"></i> Al menos 1 video enseñando el IP</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-link"></i> Tener el Discord en la descripción</li>
+                    </ul>
+                    <p style="margin-top:15px; font-weight:bold;">Beneficios: Prefijo [MiniYT] + Kit básico mensual</p>
+                </div>
+                <div class="card" style="border-color: #FF0000;">
+                    <h3>YOUTUBER +</h3>
+                    <div class="price" style="color: #FF0000;"><i class="fa-brands fa-youtube"></i> Requisitos</div>
+                    <ul style="text-align: center;">
+                        <li style="justify-content: center;"><i class="fa-solid fa-users"></i> Mínimo 500 Suscriptores</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-eye"></i> 100+ vistas por video del servidor</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-clapperboard"></i> 2 videos al mes en el server</li>
+                        <li style="justify-content: center;"><i class="fa-solid fa-heart"></i> Promocionar activamente la comunidad</li>
+                    </ul>
+                    <p style="margin-top:15px; font-weight:bold;">Beneficios: Rango [YT+] + /fly + Permisos de moderación estética</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top: 30px; font-size:1.3rem;">* Si cumples los requisitos, abre un ticket en nuestro servidor de Discord para reclamarlo.</p>
+        </section>
+
+        <!-- SECCIÓN REGLAS -->
+        <section id="reglas">
+            <h2 class="section-title">Reglamento del Servidor</h2>
+            <ul class="rule-list">
+                <li><strong>1. Respeto mutuo:</strong> Queda prohibido insultar, acosar o discriminar a cualquier jugador o miembro del STAFF en el chat general.</li>
+                <li><strong>2. Uso de Hacks/Cheats:</strong> El uso de clientes modificados, texturas con rayos X (X-Ray) o cualquier ventaja injusta resultará en Ban Permanente.</li>
+                <li><strong>3. Aprovechamiento de Bugs:</strong> Si encuentras un fallo o error en la versión 0.15.X, debes reportarlo de inmediato. Usarlo a tu favor conllevará sanción.</li>
+                <li><strong>4. Grifeo (Griefing):</strong> No destruyas construcciones ajenas si estas se encuentran en zonas protegidas o reclamadas de la modalidad Survival.</li>
+                <li><strong>5. Spam/Flood:</strong> No inundes el chat con mensajes repetitivos ni envíes enlaces de otros servidores ajenos a LightStress.</li>
+            </ul>
+        </section>
+
+        <!-- SECCIÓN INFO DEL SERVIDOR -->
+        <section id="info">
+            <h2 class="section-title">Información Técnica</h2>
+            <div class="info-box">
+                <h3><i class="fa-solid fa-code-branch"></i> Versión Soportada</h3>
+                <p>LightStress está optimizado específicamente para las versiones <strong>0.15.X</strong> de Minecraft Pocket Edition / Bedrock. Esto garantiza la nostalgia y fluidez de los sistemas clásicos.</p>
+            </div>
+            <div class="info-box">
+                <h3><i class="fa-solid fa-shield-halved"></i> Modalidad: Survival Neón</h3>
+                <p>Un survival enfocado en la economía, protección de terrenos y PvP equilibrado bajo la temática de rayos y luces neón oscuras.</p>
+            </div>
+            <div class="info-box">
+                <h3><i class="fa-solid fa-users-gear"></i> Soporte Técnico</h3>
+                <p>¿Problemas con tu compra o reporte de usuarios? El equipo administrativo atiende las 24 horas del día a través de nuestro panel centralizado en Discord.</p>
+            </div>
+        </section>
+
+        <!-- COMUNIDAD DISCORD -->
+        <div class="discord-sec">
+            <h3><i class="fa-brands fa-discord"></i> ¡Únete a la Comunidad Oficial!</h3>
+            <p style="margin-bottom: 20px; font-size: 1.2rem;">Entérate de eventos, actualizaciones, sorteos de rangos y soporte técnico inmediato.</p>
+            <a href="https://discord.gg/E4ZWNEApZ" target="_blank" class="btn btn-discord"><i class="fa-brands fa-discord"></i> ENTRAR AL DISCORD</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 LightStress. Servidor no afiliado con Mojang Studios.</p>
+        <p style="font-size: 0.9rem; color: #555; margin-top: 5px;">Alojado con pasión en GitHub Pages</p>
+    </footer>
+
+    <script>
+        // Sistema simple de pestañas (Tabs)
+        function switchTab(tabId) {
+            // Desactivar todas las secciones
+            const sections = document.querySelectorAll('section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+            
+            // Quitar clase activa a los enlaces
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Activar la sección elegida
+            document.getElementById(tabId).classList.add('active-section');
+            
+            // Activar enlace clicado
+            event.currentTarget.classList.add('active');
+        }
+
+        // Simulación de acción de compra
+        function buyAction(item) {
+            alert('Has seleccionado: ' + item + '\n\nPara completar tu compra en este entorno beta de GitHub, abre un Ticket en nuestro Discord oficial y adjunta el nombre del producto.');
+        }
+    </script>
+</body>
+</html>
