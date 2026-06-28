@@ -28,7 +28,6 @@
 
   html{scroll-behavior:smooth;}
 
-  /* Fondo totalmente oscuro, casi negro puro con tinte azul mínimo */
   body{
     background:
       radial-gradient(ellipse 800px 500px at 8% -10%, rgba(15,45,110,0.16), transparent 60%),
@@ -54,7 +53,6 @@
 
   .mono{ font-family:'JetBrains Mono',monospace; }
 
-  /* --- VOLTAGE LINE (elemento de firma, animación liviana basada en transform) --- */
   .volt-line{
     position:relative;
     height:2px;
@@ -92,7 +90,6 @@
     100%{ transform:translateX(800%); }
   }
 
-  /* --- HEADER --- */
   header{
     background:rgba(6,9,15,0.96);
     border-bottom:1px solid var(--edge);
@@ -194,14 +191,12 @@
   nav a.active{ color:var(--volt); }
   nav a.active::after{ transform:scaleX(1); }
 
-  /* --- HERO --- */
   .hero{
     text-align:center;
     padding:90px 20px 60px;
     position:relative;
   }
 
-  /* Animaciones de entrada: solo opacity + transform (sin filter:blur, mucho más livianas) */
   @keyframes hero-in{
     from{ opacity:0; transform:translateY(18px); }
     to{ opacity:1; transform:translateY(0); }
@@ -239,7 +234,6 @@
     color:var(--volt);
     display:inline-block;
   }
-  /* Halo de brillo en capa separada: solo anima opacity/transform (el blur no se recalcula cada frame) */
   .hero h1 span::after{
     content:"";
     position:absolute;
@@ -290,7 +284,6 @@
     box-shadow:0 0 0 1px rgba(57,225,255,0.04), 0 10px 30px -10px rgba(0,0,0,0.6);
     animation:hero-in 0.6s 0.3s ease both;
   }
-  /* Halo detrás del panel de IP, también solo opacity/transform */
   .ip-readout::after{
     content:"";
     position:absolute;
@@ -338,7 +331,6 @@
     100%{ transform:scale(1); }
   }
 
-  /* --- LAYOUT --- */
   .container{
     max-width:1180px;
     margin:0 auto;
@@ -393,7 +385,6 @@
     to{ width:54px; }
   }
 
-  /* --- GRID / CARDS --- */
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
@@ -423,7 +414,6 @@
     box-shadow:0 16px 38px -16px rgba(0,0,0,0.7), 0 0 22px -10px rgba(57,225,255,0.25);
   }
 
-  /* La tarjeta destacada "respira" con transform únicamente (sin box-shadow animado) */
   .card.featured{
     border-color:rgba(57,225,255,0.32);
     box-shadow:0 0 22px -8px rgba(57,225,255,0.22);
@@ -529,7 +519,6 @@
     font-size:1.02rem;
   }
 
-  /* --- RULES --- */
   .rule-list{ list-style:none; display:flex; flex-direction:column; gap:12px; }
   .rule-list .reveal:nth-child(1){ transition-delay:0s; }
   .rule-list .reveal:nth-child(2){ transition-delay:0.06s; }
@@ -565,7 +554,6 @@
   }
   .rule-list strong{ color:#fff; }
 
-  /* --- INFO --- */
   .info-box{
     background:var(--panel);
     border:1px solid var(--edge);
@@ -587,7 +575,6 @@
   .info-box h3 i{ color:var(--volt); }
   .info-box strong{ color:var(--volt); }
 
-  /* --- CREATOR CARD --- */
   .creator-card{
     background:var(--panel);
     border:1px solid var(--edge);
@@ -661,7 +648,6 @@
 
   .deco{ filter:grayscale(0); font-size:0.85em; }
 
-  /* --- DISCORD --- */
   .discord-sec{
     text-align:center;
     background:var(--panel);
@@ -721,7 +707,33 @@
   }
   footer p:last-child{ font-size:0.85rem; color:#445164; margin-top:6px; }
 
-  /* --- TOAST / MODAL --- */
+  /* --- Formulario de suscripción en footer --- */
+  .footer-subscribe{
+    max-width:400px;
+    margin:18px auto 10px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-items:center;
+  }
+  .footer-subscribe input{
+    width:100%;
+    background:var(--panel-2);
+    border:1px solid var(--edge);
+    color:var(--text);
+    font-family:'Rajdhani',sans-serif;
+    font-size:1rem;
+    padding:10px 14px;
+    border-radius:var(--radius-sm);
+    transition:border-color 0.25s;
+  }
+  .footer-subscribe input:focus{ outline:none; border-color:var(--volt); }
+  .footer-subscribe .btn{
+    width:auto;
+    padding:10px 24px;
+    font-size:0.9rem;
+  }
+
   .toast{
     position:fixed;
     bottom:24px;
@@ -752,7 +764,6 @@
   }
   .toast a:hover{ text-decoration:underline; }
 
-  /* --- ACCESO ADMIN --- */
   .admin-link{
     background:none;
     border:1px solid var(--edge);
@@ -790,7 +801,9 @@
     border-radius:var(--radius);
     padding:32px 28px;
     width:100%;
-    max-width:380px;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
     box-shadow:0 24px 60px -20px rgba(0,0,0,0.8);
     transform:translateY(14px) scale(0.97);
     transition:transform 0.3s ease;
@@ -867,6 +880,39 @@
     color:var(--text-dim);
   }
 
+  /* Tabla de IPs en el panel admin */
+  .ip-table-wrap{
+    max-height:200px;
+    overflow-y:auto;
+    margin:12px 0 16px;
+    border:1px solid var(--edge);
+    border-radius:var(--radius-sm);
+    background:var(--panel-2);
+  }
+  .ip-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.85rem;
+    text-align:left;
+  }
+  .ip-table th{
+    background:var(--edge);
+    color:var(--text);
+    padding:8px 10px;
+    position:sticky;
+    top:0;
+    z-index:2;
+    font-weight:600;
+  }
+  .ip-table td{
+    padding:8px 10px;
+    border-bottom:1px solid var(--edge);
+    color:var(--text-dim);
+  }
+  .ip-table tr:last-child td{ border-bottom:none; }
+  .ip-table .email-col{ color:var(--volt); }
+  .ip-table .date-col{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; }
+
   .admin-note{
     font-size:0.88rem;
     color:var(--text-dim);
@@ -879,11 +925,9 @@
   }
   .admin-note i{ color:var(--amber); margin-right:6px; }
 
-  .modal-actions{ display:flex; gap:10px; }
-  .modal-actions .btn{ width:auto; flex:1; padding:10px 16px; font-size:0.92rem; }
+  .modal-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+  .modal-actions .btn{ width:auto; flex:1; padding:10px 16px; font-size:0.92rem; min-width:120px; }
 
-  /* --- REVEAL ON SCROLL --- */
-  /* Solo opacity + transform: liviano para gama media/baja */
   .reveal{
     opacity:0;
     transform:translateY(18px);
@@ -915,6 +959,7 @@
     .hero{ padding:60px 16px 44px; }
     .hero h1{ font-size:2.1rem; }
     .ip-readout{ flex-wrap:wrap; padding:12px 8px 12px 16px; }
+    .modal-box{ max-width:100%; padding:24px 16px; }
   }
 </style>
 </head>
@@ -959,7 +1004,6 @@
   <!-- TIENDA -->
   <section id="tienda" class="active-section">
     <div class="section-head reveal">
-      
       <h2 class="section-title">Rangos VIP <span class="deco">⚔️</span></h2>
     </div>
     <div class="grid">
@@ -989,7 +1033,6 @@
     </div>
 
     <div class="section-head reveal">
-      
       <h2 class="section-title">Kits &amp; Keys <span class="deco"></span></h2>
     </div>
     <div class="grid">
@@ -1019,7 +1062,6 @@
   <!-- RANGOS YT -->
   <section id="rangos-yt">
     <div class="section-head reveal">
-      
       <h2 class="section-title">Requisitos de Creadores</h2>
     </div>
     <div class="grid">
@@ -1052,7 +1094,6 @@
   <!-- REGLAS -->
   <section id="reglas">
     <div class="section-head reveal">
-      
       <h2 class="section-title">Reglas del Servidor</h2>
     </div>
     <ul class="rule-list">
@@ -1067,7 +1108,6 @@
   <!-- INFO -->
   <section id="info">
     <div class="section-head reveal">
-      
       <h2 class="section-title">Información Técnica <span class="deco">⛏️</span></h2>
     </div>
     <div class="info-box reveal">
@@ -1108,6 +1148,11 @@
 <footer>
   <p>&copy; 2026 LightStress</p>
   <p>hecho por astrx</p>
+  <!-- Formulario de suscripción en footer -->
+  <div class="footer-subscribe">
+    <input type="email" id="subscribeEmail" placeholder="✉️ Tu correo electrónico" required>
+    <button class="btn" onclick="subscribeEmail()">Suscribirse</button>
+  </div>
   <button class="admin-link" onclick="openAdminModal()"><i class="fa-solid fa-lock"></i> Acceso Admin</button>
 </footer>
 
@@ -1120,6 +1165,7 @@
       <form onsubmit="handleAdminLogin(event)">
         <input class="admin-input" type="text" id="adminUser" placeholder="Usuario" autocomplete="off" required>
         <input class="admin-input" type="password" id="adminPass" placeholder="Contraseña" required>
+        <input class="admin-input" type="email" id="adminEmail" placeholder="Tu correo (opcional, para registro)" autocomplete="off">
         <p class="login-error" id="loginError"></p>
         <button type="submit" class="btn">Ingresar</button>
       </form>
@@ -1130,9 +1176,21 @@
       <div class="stat-grid">
         <div class="stat-card">
           <span class="stat-num" id="statVisits">0</span>
-          <span class="stat-label">Visitas registradas en este navegador</span>
+          <span class="stat-label">Visitas únicas (IPs registradas)</span>
         </div>
       </div>
+
+      <div class="ip-table-wrap">
+        <table class="ip-table">
+          <thead>
+            <tr><th>IP</th><th>Correo</th><th>Fecha/Hora</th></tr>
+          </thead>
+          <tbody id="ipTableBody">
+            <!-- se llena con JS -->
+          </tbody>
+        </table>
+      </div>
+
       <p class="admin-note"><i class="fa-solid fa-triangle-exclamation"></i>Esta página es estática (sin servidor), por lo que no puede capturar correos ni direcciones IP reales de quienes la visitan — eso requeriría un backend y el consentimiento de cada visitante. Este número solo cuenta las veces que <strong>este mismo navegador</strong> cargó la página.</p>
       <div class="modal-actions">
         <button class="btn" onclick="resetVisits()">Reiniciar contador</button>
@@ -1146,6 +1204,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // ---- Funciones de navegación y utilidades ----
   function toggleMenu(){
     const navbar = document.getElementById('navbar');
     const btn = document.querySelector('.menu-toggle');
@@ -1176,7 +1235,7 @@
       const btn = document.getElementById('copy-btn');
       btn.classList.add('copied');
       btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-      showToast('IP copiada al portapenes.');
+      showToast('IP copiada al portapapeles.');
       setTimeout(() => {
         btn.classList.remove('copied');
         btn.innerHTML = '<i class="fa-solid fa-copy"></i>';
@@ -1197,7 +1256,72 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
   }
 
-  /* --- PANEL ADMIN --- */
+  // ---- Registro de IP y correos ----
+  let currentIP = '';
+
+  // Obtener IP pública usando ipify
+  async function fetchIP() {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.warn('No se pudo obtener la IP:', error);
+      return '0.0.0.0';
+    }
+  }
+
+  // Guardar visita en localStorage
+  async function registerVisit() {
+    const ip = await fetchIP();
+    currentIP = ip;
+
+    let visits = JSON.parse(localStorage.getItem('ls_visits_data')) || [];
+    // Si la IP ya existe, solo actualizamos la fecha si han pasado más de 24h (para no repetir)
+    const existing = visits.find(v => v.ip === ip);
+    if (existing) {
+      // Actualizar fecha/hora
+      existing.date = new Date().toISOString();
+    } else {
+      visits.push({
+        ip: ip,
+        email: '',  // se llenará al suscribirse o hacer login
+        date: new Date().toISOString()
+      });
+    }
+    localStorage.setItem('ls_visits_data', JSON.stringify(visits));
+    // Guardamos también un contador de visitas únicas
+    const uniqueIPs = new Set(visits.map(v => v.ip));
+    localStorage.setItem('ls_visits_count', uniqueIPs.size);
+  }
+
+  // Suscripción por correo
+  function subscribeEmail() {
+    const input = document.getElementById('subscribeEmail');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      showToast('Por favor, ingresa un correo válido.');
+      return;
+    }
+    // Guardar correo asociado a la IP actual
+    let visits = JSON.parse(localStorage.getItem('ls_visits_data')) || [];
+    const ip = currentIP || '0.0.0.0';
+    const existing = visits.find(v => v.ip === ip);
+    if (existing) {
+      existing.email = email;
+    } else {
+      visits.push({
+        ip: ip,
+        email: email,
+        date: new Date().toISOString()
+      });
+    }
+    localStorage.setItem('ls_visits_data', JSON.stringify(visits));
+    input.value = '';
+    showToast('✅ Correo registrado correctamente.');
+  }
+
+  // ---- Panel Admin ----
   const ADMIN_USER = 'Giovanny';
   const ADMIN_PASS = '0993030423yy';
 
@@ -1208,6 +1332,7 @@
     document.getElementById('loginError').textContent = '';
     document.getElementById('adminUser').value = '';
     document.getElementById('adminPass').value = '';
+    document.getElementById('adminEmail').value = '';
   }
 
   function closeAdminModal(){
@@ -1218,7 +1343,26 @@
     e.preventDefault();
     const user = document.getElementById('adminUser').value.trim();
     const pass = document.getElementById('adminPass').value;
+    const email = document.getElementById('adminEmail').value.trim();
+
     if(user === ADMIN_USER && pass === ADMIN_PASS){
+      // Si se proporcionó email, lo asociamos a la IP actual (la del login)
+      if (email && email.includes('@')) {
+        let visits = JSON.parse(localStorage.getItem('ls_visits_data')) || [];
+        const ip = currentIP || '0.0.0.0';
+        const existing = visits.find(v => v.ip === ip);
+        if (existing) {
+          existing.email = email;
+        } else {
+          visits.push({
+            ip: ip,
+            email: email,
+            date: new Date().toISOString()
+          });
+        }
+        localStorage.setItem('ls_visits_data', JSON.stringify(visits));
+      }
+
       document.getElementById('loginView').style.display = 'none';
       document.getElementById('panelView').style.display = 'block';
       loadStats();
@@ -1228,21 +1372,36 @@
   }
 
   function loadStats(){
-    const visits = localStorage.getItem('ls_visits') || '0';
-    document.getElementById('statVisits').textContent = visits;
+    const visits = JSON.parse(localStorage.getItem('ls_visits_data')) || [];
+    const uniqueCount = new Set(visits.map(v => v.ip)).size;
+    document.getElementById('statVisits').textContent = uniqueCount;
+
+    // Llenar tabla
+    const tbody = document.getElementById('ipTableBody');
+    tbody.innerHTML = '';
+    // Ordenar por fecha descendente
+    visits.sort((a, b) => new Date(b.date) - new Date(a.date));
+    visits.forEach(v => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${v.ip}</td>
+        <td class="email-col">${v.email || '-'}</td>
+        <td class="date-col">${new Date(v.date).toLocaleString()}</td>
+      `;
+      tbody.appendChild(tr);
+    });
   }
 
   function resetVisits(){
-    localStorage.setItem('ls_visits', '0');
-    loadStats();
+    if (confirm('¿Reiniciar todos los datos de visitas y correos?')) {
+      localStorage.removeItem('ls_visits_data');
+      localStorage.setItem('ls_visits_count', '0');
+      loadStats();
+      showToast('Contador reiniciado.');
+    }
   }
 
-  function registerVisit(){
-    const current = parseInt(localStorage.getItem('ls_visits') || '0', 10);
-    localStorage.setItem('ls_visits', current + 1);
-  }
-  registerVisit();
-
+  // ---- Inicialización ----
   document.getElementById('adminOverlay').addEventListener('click', (e) => {
     if(e.target.id === 'adminOverlay') closeAdminModal();
   });
@@ -1250,17 +1409,29 @@
     if(e.key === 'Escape') closeAdminModal();
   });
 
+  // Registrar visita al cargar la página
+  registerVisit();
+
+  // ---- Intersection Observer para revelar elementos ----
   let scrollObserver = null;
 
   function initReveal(){
     if(scrollObserver) scrollObserver.disconnect();
     scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); scrollObserver.unobserve(en.target); } });
+      entries.forEach(en => {
+        if(en.isIntersecting){
+          en.target.classList.add('in');
+          scrollObserver.unobserve(en.target);
+        }
+      });
     }, { threshold:0.15 });
     document.querySelectorAll('.active-section .reveal, .discord-sec.reveal').forEach(el => scrollObserver.observe(el));
   }
 
   initReveal();
+
+  // Cargar stats si el modal ya estaba abierto (caso raro)
+  // pero lo dejamos así.
 </script>
 
 </body>
