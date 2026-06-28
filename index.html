@@ -34,9 +34,9 @@
     font-weight:500;
     overflow-x:hidden;
     background-image:
-      radial-gradient(circle at 15% 0%, rgba(20,60,140,0.18) 0%, transparent 55%),
-      radial-gradient(circle at 85% 30%, rgba(57,225,255,0.06) 0%, transparent 50%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+      radial-gradient(circle at 15% 0%, rgba(20,60,140,0.16) 0%, transparent 55%),
+      radial-gradient(circle at 85% 30%, rgba(57,225,255,0.05) 0%, transparent 50%);
+    background-attachment:fixed;
   }
 
   ::selection{ background:var(--volt); color:#04141a; }
@@ -65,22 +65,22 @@
     content:"";
     position:absolute;
     top:-3px;
-    left:-10%;
+    left:0;
     width:14%;
     height:8px;
     background:radial-gradient(ellipse at center, rgba(57,225,255,0.95) 0%, rgba(57,225,255,0.35) 40%, transparent 75%);
-    filter:blur(1px);
-    animation:current-flow 4.5s linear infinite;
+    will-change:transform;
+    transform:translateX(-100%);
+    animation:current-flow 5s linear infinite;
   }
   @keyframes current-flow{
-    0%{ left:-15%; }
-    100%{ left:105%; }
+    0%{ transform:translateX(-100%); }
+    100%{ transform:translateX(800%); }
   }
 
   /* --- HEADER --- */
   header{
-    background:rgba(10,13,18,0.85);
-    backdrop-filter:blur(10px);
+    background:rgba(8,11,16,0.97);
     border-bottom:1px solid var(--edge);
     position:sticky;
     top:0;
@@ -135,15 +135,22 @@
 
   nav a{
     text-decoration:none;
-    font-size:1.02rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.95rem;
     font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
+    letter-spacing:0.02em;
     color:var(--text-dim);
     padding:8px 14px;
     position:relative;
     transition:color 0.25s;
   }
+
+  nav a::before{
+    content:"/";
+    color:var(--text-dim);
+    opacity:0.6;
+  }
+  nav a.active::before, nav a:hover::before{ color:var(--volt); opacity:1; }
 
   nav a::after{
     content:"";
@@ -205,6 +212,17 @@
     max-width:560px;
     margin-inline:auto;
   }
+
+  .cursor{
+    display:inline-block;
+    width:9px;
+    height:1.1em;
+    background:var(--volt);
+    margin-left:6px;
+    vertical-align:middle;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
 
   .ip-readout{
     display:inline-flex;
@@ -268,20 +286,20 @@
     margin-bottom:44px;
   }
 
-  .section-eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:0.78rem;
-    color:var(--volt);
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    display:block;
-    margin-bottom:10px;
-  }
-
   .section-title{
     font-size:1.7rem;
     font-weight:700;
     color:#fff;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .section-title::before{
+    content:"$";
+    font-family:'JetBrains Mono',monospace;
+    color:var(--volt);
+    font-weight:700;
   }
 
   /* --- GRID / CARDS --- */
@@ -447,6 +465,75 @@
   .info-box h3 i{ color:var(--volt); }
   .info-box strong{ color:var(--volt); }
 
+  /* --- CREATOR CARD --- */
+  .creator-card{
+    background:var(--panel);
+    border:1px solid var(--edge);
+    border-radius:var(--radius);
+    padding:28px;
+    display:flex;
+    gap:24px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .creator-head{
+    flex-shrink:0;
+    width:88px;
+    height:88px;
+    border:2px solid var(--volt);
+    border-radius:4px;
+    overflow:hidden;
+    box-shadow:0 0 16px rgba(57,225,255,0.25);
+    background:var(--panel-2);
+  }
+  .creator-head img{
+    width:100%;
+    height:100%;
+    image-rendering:pixelated;
+    image-rendering:-moz-crisp-edges;
+    display:block;
+  }
+
+  .creator-info{ flex:1; min-width:220px; }
+
+  .creator-tag{
+    font-size:0.78rem;
+    color:var(--volt);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+
+  .creator-info h3{
+    color:#fff;
+    font-size:1.4rem;
+    margin:6px 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .creator-line{
+    font-size:1.02rem;
+    color:var(--text-dim);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .creator-line i{ color:var(--volt); width:16px; text-align:center; }
+  .creator-line a{ color:var(--text); text-decoration:none; }
+  .creator-line a:hover{ color:var(--volt); text-decoration:underline; }
+
+  .creator-note{
+    font-size:0.88rem;
+    color:var(--text-dim);
+    opacity:0.75;
+    margin-top:10px;
+  }
+
+  .deco{ filter:grayscale(0); font-size:0.85em; }
+
   /* --- DISCORD --- */
   .discord-sec{
     text-align:center;
@@ -572,10 +659,10 @@
 
     <nav id="navbar">
       <ul>
-        <li><a href="#" class="nav-link active" data-tab="tienda" onclick="switchTab(event,'tienda')">Tienda</a></li>
-        <li><a href="#" class="nav-link" data-tab="rangos-yt" onclick="switchTab(event,'rangos-yt')">Rangos YT</a></li>
-        <li><a href="#" class="nav-link" data-tab="reglas" onclick="switchTab(event,'reglas')">Reglas</a></li>
-        <li><a href="#" class="nav-link" data-tab="info" onclick="switchTab(event,'info')">Info Server</a></li>
+        <li><a href="#" class="nav-link active" data-tab="tienda" onclick="switchTab(event,'tienda')">tienda</a></li>
+        <li><a href="#" class="nav-link" data-tab="rangos-yt" onclick="switchTab(event,'rangos-yt')">rangos_yt</a></li>
+        <li><a href="#" class="nav-link" data-tab="reglas" onclick="switchTab(event,'reglas')">reglas</a></li>
+        <li><a href="#" class="nav-link" data-tab="info" onclick="switchTab(event,'info')">info</a></li>
       </ul>
     </nav>
   </div>
@@ -584,7 +671,7 @@
 <div class="hero">
   <span class="badge"><i class="fa-solid fa-microchip"></i> MCPE 0.15.X · GENISYS CORE</span>
   <h1>LIGHTSTRESS <span>SURVIVAL</span></h1>
-  <p>Una experiencia clásica e intensa, corriendo a máximo voltaje sobre la versión 0.15.X</p>
+  <p>Una experiencia clásica e intensa, corriendo a máximo voltaje sobre la versión 0.15.X<span class="cursor"></span></p>
   <div class="ip-readout">
     <div>
       <span class="label">Server IP</span><br>
@@ -601,12 +688,12 @@
   <!-- TIENDA -->
   <section id="tienda" class="active-section">
     <div class="section-head reveal">
-      <span class="section-eyebrow">// catálogo</span>
-      <h2 class="section-title">Rangos VIP</h2>
+      
+      <h2 class="section-title">Rangos VIP <span class="deco">⚔️</span></h2>
     </div>
     <div class="grid">
       <div class="card reveal">
-        <h3>STRESS</h3>
+        <h3>STRESS <span class="deco">⚡</span></h3>
         <div class="price">$2.99<small> / mes</small></div>
         <ul>
           <li><i class="fa-solid fa-check"></i> Prefijo [Stress] en el chat</li>
@@ -617,7 +704,7 @@
         <button class="btn" onclick="buyAction('Rango STRESS')">Comprar</button>
       </div>
       <div class="card featured reveal">
-        <h3>LIGHT</h3>
+        <h3>LIGHT <span class="deco">💎</span></h3>
         <div class="price">$5.99<small> / mes</small></div>
         <ul>
           <li><i class="fa-solid fa-check"></i> Prefijo [Light] azul neón</li>
@@ -631,8 +718,8 @@
     </div>
 
     <div class="section-head reveal">
-      <span class="section-eyebrow">// suministros</span>
-      <h2 class="section-title">Kits &amp; Keys</h2>
+      
+      <h2 class="section-title">Kits &amp; Keys <span class="deco">🍎</span></h2>
     </div>
     <div class="grid">
       <div class="card reveal">
@@ -661,7 +748,7 @@
   <!-- RANGOS YT -->
   <section id="rangos-yt">
     <div class="section-head reveal">
-      <span class="section-eyebrow">// creadores</span>
+      
       <h2 class="section-title">Requisitos de Creadores</h2>
     </div>
     <div class="grid">
@@ -694,7 +781,7 @@
   <!-- REGLAS -->
   <section id="reglas">
     <div class="section-head reveal">
-      <span class="section-eyebrow">// reglamento</span>
+      
       <h2 class="section-title">Reglas del Servidor</h2>
     </div>
     <ul class="rule-list">
@@ -709,8 +796,8 @@
   <!-- INFO -->
   <section id="info">
     <div class="section-head reveal">
-      <span class="section-eyebrow">// especificaciones</span>
-      <h2 class="section-title">Información Técnica</h2>
+      
+      <h2 class="section-title">Información Técnica <span class="deco">⛏️</span></h2>
     </div>
     <div class="info-box reveal">
       <h3><i class="fa-solid fa-code-branch"></i> Versión soportada</h3>
@@ -718,12 +805,29 @@
     </div>
     <div class="info-box reveal">
       <h3><i class="fa-solid fa-shield-halved"></i> Modalidad: Survival Neón</h3>
-      <p>Un survival enfocado en la economía, protección de terrenos y PvP equilibrado bajo la temática de rayos.</p>
+      <p>Un survival enfocado en la economía, protección de terrenos y PvP equilibrado bajo la temática de rayos y luces neón oscuras.</p>
+    </div>
+
+    <div class="creator-card reveal">
+      <div class="creator-head">
+        <img src="img/astrx-head.png" alt="Skin de Astrx">
+      </div>
+      <div class="creator-info">
+        <span class="creator-tag mono">// fundador</span>
+        <h3>Astrx <span class="deco">⚔️</span></h3>
+        <p class="creator-line"><i class="fa-solid fa-calendar"></i> Creó LightStress en <strong>2024</strong></p>
+        <p class="creator-line"><i class="fa-brands fa-discord"></i> Discord: <span class="mono">@.666is</span></p>
+        <p class="creator-line">
+          <i class="fa-brands fa-youtube"></i>
+          <a href="https://www.youtube.com/@ctzz.p" target="_blank" rel="noopener">youtube.com/@ctzz.p</a>
+        </p>
+        <p class="creator-note">* Su primer canal de YouTube se perdió — este es el actual.</p>
+      </div>
     </div>
   </section>
 
   <div class="discord-sec reveal">
-    <h3><i class="fa-brands fa-discord"></i> Únete a la comunidad oficial</h3>
+    <h3><i class="fa-brands fa-discord"></i> Únete a la comunidad oficial <span class="deco">🍎</span></h3>
     <p>Entérate de eventos, actualizaciones, sorteos de rangos y soporte técnico inmediato.</p>
     <a href="https://discord.gg/E4ZWNEApZ" target="_blank" rel="noopener" class="btn btn-discord"><i class="fa-brands fa-discord"></i> Entrar al Discord</a>
   </div>
@@ -731,8 +835,8 @@
 </div>
 
 <footer>
-  <p>&copy; 2026 LightStress</p>
-  <p>by Astrx</p>
+  <p>&copy; 2026 LightStress. Servidor no afiliado con Mojang Studios.</p>
+  <p>Alojado con pasión en GitHub Pages</p>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -789,12 +893,14 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 5000);
   }
 
+  let scrollObserver = null;
+
   function initReveal(){
-    const items = document.querySelectorAll('.active-section .reveal, .discord-sec.reveal');
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); obs.unobserve(en.target); } });
+    if(scrollObserver) scrollObserver.disconnect();
+    scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); scrollObserver.unobserve(en.target); } });
     }, { threshold:0.15 });
-    items.forEach(el => obs.observe(el));
+    document.querySelectorAll('.active-section .reveal, .discord-sec.reveal').forEach(el => scrollObserver.observe(el));
   }
 
   initReveal();
